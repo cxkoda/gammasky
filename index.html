@@ -6,35 +6,11 @@
 </head>
 
 <body>
-
-  <!-- <svg viewBox="0 0 200 100">
-    <image xlink:href="images/fermi_allsky_9.jpg" height="100" width="200" />
-  </svg> -->
-
   <img id="fermi" width="400" height="200" src="images/fermi_allsky_9.jpg" alt="The Scream">
   <div id="myresult" style="width: 200px; height: 200px"></div>
-
-
-
 </body>
 
 <script src="js/skyPos.js"></script>
-<script>
-  var relativeInset = [0.05, 0.05, 0.05, 0.05]
-  var size = [200, 100]
-  // setSkyPos('CYG X1', 71.3349918859785, 3.0668340708770, relativeInset, size)
-
-  var crab = equatorial2galactic(82, 22)
-
-
-  // window.onload = function () {
-  //   var c = document.getElementById("myCanvas");
-  //   var ctx = c.getContext("2d");
-  //   var img = document.getElementById("fermi");
-  //   ctx.drawImage(img, 10, 10);
-  // };
-</script>
-
 
 
 <script>
@@ -42,20 +18,18 @@
     var img, lens, result, cx, cy;
     img = document.getElementById(imgID);
     result = document.getElementById(resultID);
-    /*create lens:*/
-    // img.parentElement.insertBefore(lens, img);
-    /*calculate the ratio between result DIV and lens:*/
-    // cx = result.offsetWidth / lens.offsetWidth;
-    // cy = result.offsetHeight / lens.offsetHeight;
+    // Image scale (this has still to be adapted)
     cx = 20
     cy = 20
-    /*set background properties for the result DIV:*/
+
+    // Set and scale the image
     result.style.backgroundImage = "url('" + img.src + "')";
     result.style.backgroundSize = (img.width * cx) + "px " + (img.height * cy) + "px";
-    /*execute a function when someone moves the cursor over the image, or the lens:*/
 
+    // Compute and set the offset
     var shiftx = -(pos.x * cx * img.width - 0.5 * result.offsetWidth)
     var shifty = -(pos.y * cy * img.height - 0.5 * result.offsetHeight)
+    
     console.log(shiftx)
     result.style.backgroundPosition = shiftx + "px " + shifty + "px";
     result.style.transform = "rotate(" + rot * 180 / Math.PI + "deg)";
