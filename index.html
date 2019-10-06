@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+
+  <!-- <svg viewBox="0 0 200 100">
+    <image xlink:href="images/fermi_allsky_9.jpg" height="100" width="200" />
+  </svg> -->
+
+  <img id="fermi" width="400" height="200" src="images/fermi_allsky_9.jpg" alt="The Scream">
+  <div id="myresult" style="width: 200px; height: 200px"></div>
+
+
+
+</body>
+
+<script src="js/skyPos.js"></script>
+<script>
+  var relativeInset = [0.05, 0.05, 0.05, 0.05]
+  var size = [200, 100]
+  // setSkyPos('CYG X1', 71.3349918859785, 3.0668340708770, relativeInset, size)
+
+  var crab = equatorial2galactic(82, 22)
+
+
+  // window.onload = function () {
+  //   var c = document.getElementById("myCanvas");
+  //   var ctx = c.getContext("2d");
+  //   var img = document.getElementById("fermi");
+  //   ctx.drawImage(img, 10, 10);
+  // };
+</script>
+
+
+
+<script>
+  function imageZoom(imgID, resultID, pos, rot) {
+    var img, lens, result, cx, cy;
+    img = document.getElementById(imgID);
+    result = document.getElementById(resultID);
+    /*create lens:*/
+    // img.parentElement.insertBefore(lens, img);
+    /*calculate the ratio between result DIV and lens:*/
+    // cx = result.offsetWidth / lens.offsetWidth;
+    // cy = result.offsetHeight / lens.offsetHeight;
+    cx = 20
+    cy = 20
+    /*set background properties for the result DIV:*/
+    result.style.backgroundImage = "url('" + img.src + "')";
+    result.style.backgroundSize = (img.width * cx) + "px " + (img.height * cy) + "px";
+    /*execute a function when someone moves the cursor over the image, or the lens:*/
+
+    var shiftx = -(pos.x * cx * img.width - 0.5 * result.offsetWidth)
+    var shifty = -(pos.y * cy * img.height - 0.5 * result.offsetHeight)
+    console.log(shiftx)
+    result.style.backgroundPosition = shiftx + "px " + shifty + "px";
+    result.style.transform = "rotate(" + rot * 180 / Math.PI + "deg)";
+  }
+</script>
+
+
+<script>
+  var cygX3 = {
+    ra: 308.1075,
+    dec: 40.57
+  }
+  var crab = {
+    ra: 82,
+    dec: 22
+  }
+
+  var gal = equatorial2galactic(crab)
+  var rot = equatorial2galacticRotation(crab);
+  console.log(gal)
+  console.log(rot)
+
+  var relativeInset = [0.05, 0.05, 0.05, 0.05];
+  var pos = computeRelativePosition(gal, relativeInset);
+  console.log(pos)
+
+  imageZoom("fermi", "myresult", pos, rot);
+</script>
+
+
+</html>
